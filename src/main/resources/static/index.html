@@ -72,52 +72,15 @@
 
 
     function openSocket() {
-        // Ensures only one connection is open at a time
-        if (webSocket !== undefined && webSocket.readyState !== WebSocket.CLOSED) {
-            writeResponse("WebSocket is already opened.");
-            return;
-        }
-        // Create a new instance of the websocket
-        webSocket = new WebSocket("ws://localhost:8088/chat");
 
-        webSocket.onopen = function (event) {
-            document.getElementById("connect").style.display = 'none';
-            document.getElementById("fields").style.display = 'block';
-            document.getElementById("close").style.display = 'block';
-
-            writeResponse("Connected");
-        };
-
-        webSocket.onmessage = function (event) {
-            writeMessage(event.data);
-        };
-
-        webSocket.onclose = function (event) {
-            writeResponse("Connection closed");
-            document.getElementById("connect").style.display = 'block';
-            document.getElementById("fields").style.display = 'none';
-            document.getElementById("close").style.display = 'none';
-
-        };
     }
 
-    /**
-     * Sends the value of the text input to the server
-     */
     function send() {
-        var user = document.getElementById("user").value;
-        var text = document.getElementById("btn-input").value;
-        var time = new Date();
 
-        var message = {};
-        message.user = user;
-        message.text = text;
-        message.time = time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
-        webSocket.send(JSON.stringify(message));
     }
 
     function closeSocket() {
-        webSocket.close();
+
     }
 
     function writeResponse(text) {
